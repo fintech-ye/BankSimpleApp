@@ -11,14 +11,14 @@ pool:
   name: local
 
 steps:
-# - task: Docker@2
-#   inputs:
-#     containerRegistry: 'MAKEEN Registry'
-#     repository: 'asp-simple-app'
-#     command: 'buildAndPush'
-#     Dockerfile: '**/Dockerfile'
-#     tags: '17'
-#   displayName: Build and Push ASP Simple App Docker Image
+- task: Docker@2
+  inputs:
+    containerRegistry: 'MAKEEN Registry'
+    repository: 'asp-simple-app'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: '17'
+  displayName: Build and Push ASP Simple App Docker Image
 
 - task: KubernetesManifest@1
   inputs:
