@@ -1,8 +1,8 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: simples
----
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: simples
+# ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +11,7 @@ metadata:
     app: asp-simple
   namespace: simples
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: asp-simple
