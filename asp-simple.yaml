@@ -11,7 +11,7 @@ metadata:
     app: asp-simple
   namespace: simples
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: asp-simple
@@ -23,7 +23,7 @@ spec:
       containers:
       - name: asp-simple-app
         image: registry.mgtappsrv.makeen.ye:5000/asp-simple-app:20
-        imagePullPolicy: always
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
       imagePullSecrets:
