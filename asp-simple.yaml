@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: asp-simple-app
-        image: registry.mgtappsrv.makeen.ye:5000/asp-simple-app:20
+        image: registry.mgtappsrv.makeen.ye:5000/asp-simple-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
