@@ -11,10 +11,22 @@ pool:
   name: local
 
 steps:
-- task: Docker@2
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'MAKEEN Registry'
+#     repository: 'asp-simple-app'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+#     tags: '17'
+#   displayName: Build and Push ASP Simple App Docker Image
+
+- task: KubernetesManifest@1
   inputs:
-    containerRegistry: 'MAKEEN Registry'
-    repository: 'asp-simple-app'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-  displayName: Build and Push ASP Simple App Docker Image
+    action: 'deploy'
+    connectionType: 'kubernetesServiceConnection'
+    kubernetesServiceConnection: 'MAKEEN K8S Cluster'
+    namespace: 'simples'
+    manifests: '**/asp-simple.yaml'
+  displayName: Deploy asp-simple app to MAKEEN Cluster
+
+
