@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: simples
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asp-simple-deployment
+  labels:
+    app: asp-simple
+  namespace: simples
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asp-simple
+  template:
+    metadata:
+      labels:
+        app: asp-simple
+    spec:
+      containers:
+      - name: asp-simple-app
+        image: registry.mgtappsrv.makeen.ye:5000/asp-simple-app:17
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: asp-simple-service
+  namespace: simples
+spec:
+  selector:
+    app: asp-simple
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: asp-simple-ingress
+  namespace: simples
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/auth-response-headers:  "Authorization, X-Auth-Request-Email, X-Auth-Request-User, X-Forwarded-Access-Token"
+    nginx.ingress.kubernetes.io/auth-signin: https://login.mgtappsrv.makeen.ye/oauth2/start?rd=https%3A%2F%2Fasp-simple.mgtappsrv.makeen.ye
+    nginx.ingress.kubernetes.io/auth-url: https://login.mgtappsrv.makeen.ye/oauth2/auth
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $name_upstream_1 $upstream_cookie_oauth2_proxy;
+      access_by_lua_block {
+        if ngx.var.name_upstream_1 ~= "" then
+          ngx.header["Set-Cookie"] = "oauth2_proxy=" .. ngx.var.name_upstream_1 .. ngx.var.auth_cookie:match("(; .*)")
+        end
+      }
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+spec:
+  rules:
+  - host: asp-simple.mgtappsrv.makeen.ye
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: asp-simple-service
+            port: 
+              number: 443
+  tls:
+  - hosts:
+    - asp-simple.mgtappsrv.makeen.ye
+    secretName: simples-tls-secret
