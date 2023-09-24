@@ -11,7 +11,7 @@ metadata:
     app: asp-simple
   namespace: simples
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: asp-simple
