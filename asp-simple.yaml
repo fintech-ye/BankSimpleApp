@@ -72,7 +72,18 @@ spec:
             name: asp-simple-service
             port: 
               number: 443
+  - host: asp-simple.appsrv.makeen.ye
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: asp-simple-service
+            port: 
+              number: 443             
   tls:
   - hosts:
     - asp-simple.mgtappsrv.makeen.ye
+    - asp-simple.appsrv.makeen.ye
     secretName: simples-tls-secret
