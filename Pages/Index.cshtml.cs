@@ -21,8 +21,8 @@ public class IndexModel : PageModel
     {
         // Append each header and its value to the StringBuilder
         // sb.AppendLine($"{header.Key} = {header.Value}");
-        if(header.Key.Contains("X-Auth-Request")){
-            sb.AppendLine($"{header.Key.Replace("X-Auth-Request","")} = {header.Value}");
+        if(header.Key.Contains("X-Auth-Request-")){
+            sb.AppendLine($"{header.Key.Replace("X-Auth-Request-","")} = {header.Value}");
         }
 
     }
