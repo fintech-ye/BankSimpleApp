@@ -10,6 +10,9 @@ pool:
   vmImage: ubuntu-latest
   name: local
 
+variables:
+  DOCKER_BUILDKIT: 1
+
 steps:
 - task: Docker@2
   inputs:
