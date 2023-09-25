@@ -29,8 +29,8 @@ public class IndexModel : PageModel
             }
             if(header.Key == "X-Auth-Request-Access-Token"){
                 SetIdTokenExpiry(header.Value.ToString());
-                sb.AppendLine($"FullName = {FullName}");
-                sb.AppendLine($"SubscriberID = {SubID}");
+                sb.AppendLine($"Full Name = {FullName}");
+                sb.AppendLine($"Subscriber ID = {SubID}");
                 sb.AppendLine($"Session Expiry = {SessionEnd}");
             }
         }
