@@ -20,7 +20,7 @@ steps:
     repository: 'asp-simple-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '26'
+    tags: '27'
   displayName: Build and Push ASP Simple App Docker Image
 
 - task: KubernetesManifest@1
