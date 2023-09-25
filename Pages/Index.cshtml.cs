@@ -22,7 +22,10 @@ public class IndexModel : PageModel
         // Append each header and its value to the StringBuilder
         // sb.AppendLine($"{header.Key} = {header.Value}");
         if(header.Key.Contains("X-Auth-Request-")){
-            sb.AppendLine($"{header.Key.Replace("X-Auth-Request-","")} = {header.Value}");
+            sb.AppendLine($"{header.Key.Replace("X-Auth-Request-","")} = {header.Value.ToString().Replace("/","")}");
+            if(header.Key == "X-Auth-Request-User"){
+                UserName =  header.Value.ToString();
+            }
         }
 
     }
@@ -33,4 +36,6 @@ public class IndexModel : PageModel
     }
 
     public string Headers { get; set; }
+    public string UserName { get; set; }
 }
+
