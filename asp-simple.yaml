@@ -49,7 +49,7 @@ metadata:
   namespace: simples
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/auth-response-headers:  "Authorization, X-Auth-Request-Email, X-Auth-Request-User, X-Forwarded-Access-Token"
+    nginx.ingress.kubernetes.io/auth-response-headers:  "Authorization, X-Auth-Request-Email, X-Auth-Request-User, X-Auth-Request-Groups, X-Auth-Request-Preferred-Username, X-Auth-Request-Access-Token"
     nginx.ingress.kubernetes.io/auth-signin: https://login.mgtappsrv.makeen.ye/oauth2/start?rd=https%3A%2F%2Fasp-simple.mgtappsrv.makeen.ye
     nginx.ingress.kubernetes.io/auth-url: https://login.mgtappsrv.makeen.ye/oauth2/auth
     nginx.ingress.kubernetes.io/configuration-snippet: |
