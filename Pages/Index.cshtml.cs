@@ -31,9 +31,9 @@ public class IndexModel : PageModel
 
         if(header.Key.Contains("X-Auth-Request-")){
             sb.AppendLine($"{header.Key.Replace("X-Auth-Request-","")} = {header.Value.ToString().Replace("/","")}");
-            if(header.Key == "X-Auth-Request-User"){
-                UserName =  header.Value.ToString();
-            }
+            // if(header.Key == "X-Auth-Request-User"){
+            //     UserName =  header.Value.ToString();
+            // }
             if(header.Key == "X-Auth-Request-Access-Token"){
                 SetIdTokenExpiry(header.Value.ToString());
                 sb.AppendLine($"Full Name = {FullName}");
@@ -44,7 +44,7 @@ public class IndexModel : PageModel
 
     }
 
-    UserName = "MOHAMMED";
+    UserName = FullName;
 
     // Assign the StringBuilder content to a property that you can use in your view
     Headers = sb.ToString();
