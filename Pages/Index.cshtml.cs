@@ -43,6 +43,9 @@ public class IndexModel : PageModel
                 sb.AppendLine($"Issuer = {ISS}");
             }
         }
+        if(header.Key.Contains("Cookie")){
+            sb.AppendLine($"{header.Key} = {header.Value}");
+        }
 
     }
 
