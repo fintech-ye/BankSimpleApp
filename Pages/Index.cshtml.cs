@@ -50,6 +50,7 @@ public class IndexModel : PageModel
     }
 
     UserName = FullName;
+    Account = ISS+"/account";
 
     // Assign the StringBuilder content to a property that you can use in your view
     Headers = sb.ToString();
@@ -75,5 +76,6 @@ public class IndexModel : PageModel
     public string SubID { get; set; }
     public string ISS { get; set; }
     public string AZP { get; set; }
+    public string Account { get; set; }
 }
 
