@@ -39,6 +39,8 @@ public class IndexModel : PageModel
                 sb.AppendLine($"Full Name = {FullName}");
                 sb.AppendLine($"Subscriber ID = {SubID}");
                 sb.AppendLine($"Session Expiry = {SessionEnd}");
+                sb.AppendLine($"OIDC Client = {AZP}");
+                sb.AppendLine($"Issuer = {ISS}");
             }
         }
 
@@ -59,6 +61,8 @@ public class IndexModel : PageModel
         SessionEnd = DateTimeOffset.FromUnixTimeSeconds(Int32.Parse(SessionEnd)).DateTime.AddHours(3).ToString();
         FullName = token.Claims.First(c => c.Type == "name").Value;
         SubID = token.Claims.First(c => c.Type == "sub").Value;
+        ISS = token.Claims.First(c => c.Type == "iss").Value;
+        AZP = token.Claims.First(c => c.Type == "azp").Value;
     }
     
     public string Headers { get; set; }
@@ -66,5 +70,7 @@ public class IndexModel : PageModel
     public string FullName { get; set; }
     public string SessionEnd { get; set; }
     public string SubID { get; set; }
+    public string ISS { get; set; }
+    public string AZP { get; set; }
 }
 
