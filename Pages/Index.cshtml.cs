@@ -20,7 +20,11 @@ public class IndexModel : PageModel
     foreach (var header in Request.Headers)
     {
         // Append each header and its value to the StringBuilder
-        sb.AppendLine($"{header.Key} = {header.Value}");
+        // sb.AppendLine($"{header.Key} = {header.Value}");
+        if(header.Key.Contains("X-Auth-Request")){
+            sb.AppendLine($"{header.Key.Replace("X-Auth-Request","")} = {header.Value}");
+        }
+
     }
 
     // Assign the StringBuilder content to a property that you can use in your view
