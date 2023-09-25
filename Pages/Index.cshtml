@@ -10,7 +10,14 @@
 </div>
 <br> 
 <div class="text-start">
-    <h4>Hello @Model.UserName</h4>
-    <h5>User Info:</h5>
-    <pre>@Model.Headers</pre>
+    @{
+        if(@Model.UserName == null){
+            <h4>You are not signed In</h4>
+        }
+        else{
+            <h4>Hello @Model.UserName</h4>
+            <h5>User Info:</h5>
+            <pre>@Model.Headers</pre>
+        }
+    }
 </div>
