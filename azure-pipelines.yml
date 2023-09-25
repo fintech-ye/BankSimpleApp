@@ -10,8 +10,8 @@ pool:
   vmImage: ubuntu-latest
   name: local
 
-variables:
-  DOCKER_BUILDKIT: 1
+# variables:
+#   DOCKER_BUILDKIT: 1
 
 steps:
 - task: Docker@2
@@ -20,7 +20,7 @@ steps:
     repository: 'asp-simple-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '25'
+    tags: '26'
   displayName: Build and Push ASP Simple App Docker Image
 
 - task: KubernetesManifest@1
