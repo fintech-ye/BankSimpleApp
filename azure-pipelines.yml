@@ -8,7 +8,7 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-  name: local
+  name: default
 
 # variables:
 #   DOCKER_BUILDKIT: 1
