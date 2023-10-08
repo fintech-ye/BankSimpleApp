@@ -28,3 +28,26 @@
         }
     }
 </div>
+<br>
+<h5>Member Accounts</h5>
+<div class="account-table">
+        <table>
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>BIC</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model.Accounts)
+        {
+            <tr>
+                <td>@account.account_name</td>
+                <td>@account.BIC</td>
+                <td>@account.balance</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

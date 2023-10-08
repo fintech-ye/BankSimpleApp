@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using asp_simple.Data;
+using asp_simple.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace asp_simple.Pages;
@@ -8,10 +12,14 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(MakeenContext makeenContext, ILogger<IndexModel> logger)
     {
         _logger = logger;
+        _context = makeenContext;
+        
     }
+
+    private readonly MakeenContext _context;
 
     public void OnGet()
     {
@@ -55,7 +63,16 @@ public class IndexModel : PageModel
     // Assign the StringBuilder content to a property that you can use in your view
     Headers = sb.ToString();
 
+    Accounts = _context.Accounts.ToList();
+
     }
+
+//     public async Task<IActionResult> OnGetAsync(int? id)
+// {
+//     Accounts = await _context.Accounts.ToListAsync();
+
+//     // return Page();
+// }
 
     public void SetIdTokenExpiry(string idtoken)
         {
@@ -77,5 +94,7 @@ public class IndexModel : PageModel
     public string ISS { get; set; }
     public string AZP { get; set; }
     public string Account { get; set; }
+
+    public IList<Account> Accounts { get; set; } // a property to store the employee data
 }
 
