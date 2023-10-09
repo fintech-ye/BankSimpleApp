@@ -10,18 +10,30 @@ pool:
   vmImage: ubuntu-latest
   name: default
 
-# variables:
-#   DOCKER_BUILDKIT: 1
+variables: 
+- group: 'asp-simple-vars'
 
 steps:
-- task: Docker@2
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'MAKEEN Registry'
+#     repository: 'asp-simple-app'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+#     tags: 'latest'
+#   displayName: Build and Push ASP Simple App Docker Image
+
+- task: Kubernetes@1
   inputs:
-    containerRegistry: 'MAKEEN Registry'
-    repository: 'asp-simple-app'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: 'latest'
-  displayName: Build and Push ASP Simple App Docker Image
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'MAKEEN K8S Cluster'
+    namespace: 'simples'
+    command: 'create'
+    secretType: 'generic'
+    secretArguments: '--from-literal=db-connection-string=$(db-connection-string)'
+    secretName: 'asp-simple-secret'
+  displayName: Injecting Secrets
+
 
 - task: KubernetesManifest@1
   inputs:

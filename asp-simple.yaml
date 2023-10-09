@@ -3,6 +3,15 @@
 # metadata:
 #   name: simples
 # ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: asp-simple-secret
+#   namespace: simples
+# type: Opaque
+# data:
+#   db-connection-string: YWRtaW4=
+# ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,6 +33,12 @@ spec:
       - name: asp-simple-app
         image: registry.mgtappsrv.makeen.ye:5000/asp-simple-app:latest
         imagePullPolicy: Always
+        env:
+          - name: POSTGRES_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: asp-simple-secret
+                key: db-connection-string
         ports:
         - containerPort: 80
         resources:

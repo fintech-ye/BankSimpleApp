@@ -1,13 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using asp_simple.Data;
 using Microsoft.Extensions.Options;
+// using DotNetEnv;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Env.Load();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// builder.Services.AddDbContext<MakeenContext>(options =>
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
+
 builder.Services.AddDbContext<MakeenContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
+    options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"));
 
 var app = builder.Build();
 
@@ -19,8 +26,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-using var scope = app.Services.CreateScope();
-var db = scope.ServiceProvider.GetRequiredService<MakeenContext>();
+// using var scope = app.Services.CreateScope();
+// var db = scope.ServiceProvider.GetRequiredService<MakeenContext>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
