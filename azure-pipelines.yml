@@ -8,9 +8,9 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-  name: default
+  name: local
 
-variables: 
+variables:
 - group: 'asp-simple-vars'
 
 steps:
