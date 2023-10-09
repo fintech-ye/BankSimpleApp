@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using asp_simple.Data;
 using Microsoft.Extensions.Options;
-// using DotNetEnv;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Env.Load();
+Env.Load();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -13,8 +13,9 @@ builder.Services.AddRazorPages();
 // builder.Services.AddDbContext<MakeenContext>(options =>
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
 
-builder.Services.AddDbContext<MakeenContext>(options =>
-    options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"));
+Console.WriteLine(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"));
+
+builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
 
 var app = builder.Build();
 
