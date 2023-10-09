@@ -28,7 +28,7 @@ steps:
     command: create
     arguments: secret generic asp-simple-secret --from-literal=db-connection-string="$(db-connection-string)" -n simples --save-config --dry-run=client -o yaml | kubectl apply -f -
     kubernetesServiceEndpoint: 'MAKEEN K8S Cluster'
-    outputFormat: 'none'
+    outputFormat: 'yaml'
   displayName: Injecting Secrets
 
 # - task: Kubernetes@1
