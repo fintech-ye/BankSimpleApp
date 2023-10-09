@@ -14,14 +14,14 @@ variables:
 - group: 'asp-simple-vars'
 
 steps:
-# - task: Docker@2
-#   inputs:
-#     containerRegistry: 'MAKEEN Registry'
-#     repository: 'asp-simple-app'
-#     command: 'buildAndPush'
-#     Dockerfile: '**/Dockerfile'
-#     tags: 'latest'
-#   displayName: Build and Push ASP Simple App Docker Image
+- task: Docker@2
+  inputs:
+    containerRegistry: 'MAKEEN Registry'
+    repository: 'asp-simple-app'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+  displayName: Build and Push ASP Simple App Docker Image
 
 - task: Kubernetes@1
   inputs:
@@ -30,7 +30,7 @@ steps:
     namespace: 'simples'
     command: 'create'
     secretType: 'generic'
-    secretArguments: '--from-literal=db-connection-string=$(db-connection-string)'
+    secretArguments: '--from-literal=db-connection-string="$(db-connection-string)"'
     secretName: 'asp-simple-secret'
   displayName: Injecting Secrets
 
