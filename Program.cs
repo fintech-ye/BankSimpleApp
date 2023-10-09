@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using asp_simple.Data;
 using Microsoft.Extensions.Options;
-using DotNetEnv;
+// using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Env.Load();
+// Env.Load();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -13,7 +13,15 @@ builder.Services.AddRazorPages();
 // builder.Services.AddDbContext<MakeenContext>(options =>
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
 
-builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
+// builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
+
+if(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING") != null){
+    Console.WriteLine("Loaded DB conf from ENV");
+    builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
+}
+else{
+    builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql("Server=mgtappsrv.makeen.ye;User Id=makeen;Password=db@23*;Database=rtgs;"));
+}
 
 var app = builder.Build();
 

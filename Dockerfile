@@ -1,14 +1,10 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS restore
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /asp-simple
 
 # Copy everything
 COPY . ./
 # Restore as distinct layers
 RUN dotnet restore
-
-FROM restore AS build-env
-WORKDIR /asp-simple
-COPY . ./
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 
