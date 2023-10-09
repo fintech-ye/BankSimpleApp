@@ -13,8 +13,6 @@ builder.Services.AddRazorPages();
 // builder.Services.AddDbContext<MakeenContext>(options =>
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
 
-Console.WriteLine(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"));
-
 builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
 
 var app = builder.Build();
