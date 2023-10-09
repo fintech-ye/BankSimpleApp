@@ -14,21 +14,27 @@ variables:
 - group: 'asp-simple-vars'
 
 steps:
-# - task: Docker@2
-#   inputs:
-#     containerRegistry: 'MAKEEN Registry'
-#     repository: 'asp-simple-app'
-#     command: 'buildAndPush'
-#     Dockerfile: '**/Dockerfile'
-#     tags: 'latest'
-#   displayName: Build and Push ASP Simple App Docker Image
+- task: Docker@2
+  inputs:
+    containerRegistry: 'MAKEEN Registry'
+    repository: 'asp-simple-app'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+  displayName: Build and Push ASP Simple App Docker Image
+
+- task: Kubernetes@1
+  inputs:
+    command: delete
+    arguments: secret asp-simple-secret -n simples --ignore-not-found
+    kubernetesServiceEndpoint: 'MAKEEN K8S Cluster'
+  displayName: Delete Previous Secret
 
 - task: Kubernetes@1
   inputs:
     command: create
-    arguments: secret generic asp-simple-secret --from-literal=db-connection-string="$(db-connection-string)" -n simples --save-config --dry-run=client -o yaml | kubectl apply -f -
+    arguments: secret generic asp-simple-secret --from-literal=db-connection-string="$(db-connection-string)" -n simples
     kubernetesServiceEndpoint: 'MAKEEN K8S Cluster'
-    outputFormat: 'yaml'
   displayName: Injecting Secrets
 
 # - task: Kubernetes@1
