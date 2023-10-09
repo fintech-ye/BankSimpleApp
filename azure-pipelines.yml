@@ -26,7 +26,7 @@ steps:
 - task: Kubernetes@1
   inputs:
     command: create
-    arguments: secret generic asp-simple-secret --from-literal=db-connection-string="$(db-connection-string)" -n simples
+    arguments: secret generic asp-simple-secret --from-literal=db-connection-string="$(db-connection-string)" -n simples --force
     kubernetesServiceEndpoint: 'MAKEEN K8S Cluster'
   displayName: Injecting Secrets
 
