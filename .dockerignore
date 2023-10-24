@@ -1,2 +1,5 @@
 **/.git
 .env
+commands.sh
+**/bin
+**/obj

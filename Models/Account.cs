@@ -1,4 +1,4 @@
-namespace asp_simple.Models
+namespace BankSimpleApp.Models
 {
     public class Account
     {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using asp_simple.Data;
+using BankSimpleApp.Data;
 using Microsoft.Extensions.Options;
 using DotNetEnv;
 
@@ -10,18 +10,23 @@ Env.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// builder.Services.AddDbContext<MakeenContext>(options =>
-//     options.UseNpgsql(builder.Configuration.GetConnectionString("makeenDB")));
+var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+Console.WriteLine(environmentName);
 
-builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
+if(environmentName != null && environmentName.Equals("Development")){
+    builder.Services.AddDbContext<MakeenContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("myDB")));
+}
+else{
+    string connectionString = builder.Configuration.GetConnectionString("MyDB").ToString();
 
-// if(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING") != null){
-//     Console.WriteLine("Loaded DB conf from ENV");
-//     builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")));
-// }
-// else{
-//     builder.Services.AddDbContext<MakeenContext>(options => options.UseNpgsql("Server=mgtappsrv.makeen.ye;User Id=makeen;Password=db@23*;Database=rtgs;"));
-// }
+    connectionString = Environment.ExpandEnvironmentVariables(connectionString);
+
+    Console.WriteLine(connectionString);
+
+    builder.Services.AddDbContext<MakeenContext>(options =>
+        options.UseSqlServer(connectionString));
+}
+
 
 var app = builder.Build();
 
@@ -33,8 +38,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// using var scope = app.Services.CreateScope();
-// var db = scope.ServiceProvider.GetRequiredService<MakeenContext>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

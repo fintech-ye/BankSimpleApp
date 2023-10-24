@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using asp_simple.Models;
+using BankSimpleApp.Models;
 using Microsoft.Extensions.Options;
-namespace asp_simple.Data
+namespace BankSimpleApp.Data
 {
     public class MakeenContext : DbContext
     {
