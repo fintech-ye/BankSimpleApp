@@ -34,4 +34,5 @@ services:
 
 volumes:
   mssql_volume:
-    external: true
+    name: mssql_volume
+    # external: true

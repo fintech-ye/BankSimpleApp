@@ -1,6 +1,6 @@
 -- IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID (N' [cby].[dbo].[accounts]') AND type in (N'U'))
-IF object_id('cby.dbo.#accounts') is not null
-BEGIN
+-- IF object_id('cby.dbo.#accounts') is not null
+-- BEGIN
     CREATE TABLE [cby].[dbo].[accounts] (
         [BIC]          VARCHAR (50) NOT NULL,
         [account_name] VARCHAR (50) NOT NULL,
@@ -9,7 +9,7 @@ BEGIN
         [currency]     CHAR (10)    CONSTRAINT [DEFAULT_accounts_currency] DEFAULT ((886)) NOT NULL,
         CONSTRAINT [PK_accounts] PRIMARY KEY CLUSTERED ([BIC] ASC)
     );
-END
+-- END
 
     DELETE FROM cby.dbo.accounts;
 
