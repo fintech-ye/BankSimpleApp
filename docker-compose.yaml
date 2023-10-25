@@ -1,0 +1,37 @@
+networks:
+  bank-network:
+    name: bank-network
+    external: true
+
+services:
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-server
+    hostname: mssql-server
+    ports:
+    - '1433:1433'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=CBY@123456
+      - MSSQL_PID=Evaluation
+    volumes:
+      - 'mssql_volume:/var/opt/mssql'
+    networks:
+      - bank-network
+      
+  bank-app:
+    image: maghbari/bank-simple-app
+    container_name: bank-app
+    ports:
+    - '8080:80'
+    environment:
+      - DB_SERVER="mssql-server,1433"
+      - DB_NAME=cby
+      - DB_UID=sa
+      - DB_PASSWD=CBY@123456
+    networks:
+      - bank-network
+
+volumes:
+  mssql_volume:
+    external: true
